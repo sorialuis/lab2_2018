@@ -1,0 +1,140 @@
+<!-- This is a comment -->
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculadora</title>
+
+</head>
+
+<body>
+    <section>
+        <h1 id="Titulo">Calculadora</h1>
+        <p id="pdescrip">
+            Esta pagina le permite resolver el calculo de las operaciones matematicas basicas con dos operandos.
+        </p>
+        <form id="id_f_calc" name="fcalc">
+            <!--Campo para ingresar el primer valor-->
+            <label id="id_Label_val1 ">Valor1
+                <input id="id_val1 " name="val1" type="number" class="validate">
+            </label>
+            <br>
+            <!--Seleccion de la operacion-->
+            <label id="label_op ">Operación
+                <select id="id_op " name="op">
+                    <option value="0" selected>Elija una operación</option>
+                    <option value="+">Suma</option>
+                    <option value="-">Resta</option>
+                    <option value="*">Multiplicación</option>
+                    <option value="/">División</option>
+                </select>
+            </label>
+            <br>
+            <!--Campo para ingresar el segundo valor-->
+            <label id="id_label_val2">Valor2
+                <input id="id_val2" name="val2" type="number" class="validate">
+            </label>
+            <br>
+            <input type="button" onclick="Javascript:Solver(fcalc, 'val1', 'op','val2', presult) " value="Calcular" id="enviar">
+        </form>
+        <p id="presult"></p>
+        <h1 id="Titulo">Conversor de sistemas de números</h1>
+        <form id="id_cnum" name="cnum">
+            <label id="id_Label_num ">Número
+                <input id="id_num " name="num" type="text">
+            </label>
+            <br>
+            <label id="label_op3 ">Sistema Numérico
+                <select id="id_op3 " name="opcion3">
+                    <option value="0" selected>Elija un sistema</option>
+                    <option value="16">Hexadecimal</option>
+                    <option value="2">Binario</option>
+                </select>
+            </label>
+            <br>
+            <input type="button" onclick="Javascript:Convert(cnum, 'num', 'opcion3', resultado) " value="Conversion" id="envio">
+        </form>
+        <p id="resultado"></p>
+    </section>
+    <script type="Text/JavaScript" language="JavaScript">
+    function Solver(f1, a1, o, a2, text1) {
+            var valor1 = f1.elements[a1].value;
+            var valor2 = f1.elements[a2].value;
+            var operacion = f1.elements[o].value;
+            if (operacion!=0) {
+            var calculo = "Calcular: "+valor1+operacion+valor2;
+                alert(calculo);
+                result = Calculate(valor1, operacion, valor2);
+                text1.textContent = calculo+" --->>> "+"Resultado: "+result;
+                return true;
+              } else{ alert("Debe elegir una operacion para poder calcular");
+                    location.reload();
+                    return;
+                }
+    }
+    function Calculate(a1, o, a2) {
+        a1=parseInt(a1);a2=parseInt(a2);
+        switch (o) {
+            case "+": r = a1 + a2;
+            break; case "-": r = a1 - a2;
+            break; case "*": r = a1 * a2;
+            break; case "/": r = a1 / a2;
+            break;
+        };
+            return r;
+    }
+    function Convert(f3, a, op, texto) {
+        var numero = f3.elements[a].value;
+        var sistema = f3.elements[op].value;
+        if (sistema != 0) {
+            var conversion = "Pasar "+numero+" a base "+sistema;
+            resultado = Conversion(numero, sistema);
+            alert(resultado);
+            texto.textContent = conversion+" --->>> "+"Resultado: "+resultado;
+            return true;
+        }
+        else {
+            alert("Debe elegir un sistema inicial y uno final para convertir");
+            location.reload();
+            return;
+        }
+    }
+    function Conversion(a, op) {
+        a=parseInt(a);
+        switch(op) {
+            case "16":
+                r = ConvertBase(a).from(10).to(16);
+                break;
+            case "2":
+                r = ConvertBase(a).from(10).to(2) ;
+                break;
+        };
+        return r;
+    }
+
+    (function(){
+
+        var ConvertBase = function (num) {
+            return {
+                from : function (baseFrom) {
+                    return {
+                        to : function (baseTo) {
+                            return parseInt(num, baseFrom).toString(baseTo);
+                        }
+                    };
+                }
+            };
+        };
+
+        this.ConvertBase = ConvertBase;
+
+    })(this);
+
+    </script>
+</body>
+
+</html>
